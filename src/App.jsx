@@ -535,6 +535,9 @@ function ProjectBentoCard({ p, i }) {
   const cardRef = useRef()
   const inView = useInView(cardRef, { once: true, margin: "-60px" })
   const isEven = i % 2 === 0
+  
+  const [mainIdx, setMainIdx] = useState(0)
+  const otherImgs = p.imgs.map((src, idx) => ({ src, idx })).filter(img => img.idx !== mainIdx)
 
   // 3D tilt
   const rx = useMotionValue(0), ry = useMotionValue(0)
@@ -584,19 +587,23 @@ function ProjectBentoCard({ p, i }) {
           <div className="relative lg:w-[58%] overflow-hidden" style={{ minHeight: 360 }}>
             {/* Main image */}
             <div className="absolute inset-0">
-              <img src={p.imgs[0]} alt={p.title} loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"/>
+              {p.imgs.length > 0 && (
+                <img key={mainIdx} src={p.imgs[mainIdx]} alt={p.title} loading="lazy"
+                  className="w-full h-full object-cover animate-fade-in group-hover:scale-105 transition-transform duration-700 ease-out"/>
+              )}
               {/* Color overlay */}
               <div className="absolute inset-0" style={{ background: `linear-gradient(135deg,${p.color}18,transparent 60%)` }}/>
               {/* Bottom fade */}
               <div className="absolute inset-0 lg:hidden"
                 style={{ background: "linear-gradient(to top,#0d0d0d 0%,transparent 60%)" }}/>
             </div>
-            {/* 2 small images bottom corner */}
+            {/* Small images bottom corner */}
             <div className={`absolute bottom-3 ${isEven?"right-3":"left-3"} flex gap-2 z-10`}>
-              {[p.imgs[1],p.imgs[2]].map((src,k)=>(
-                <div key={k} className="overflow-hidden rounded-xl border" style={{width:90,height:65,borderColor:`${p.color}30`}}>
-                  <img src={src} alt="" loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
+              {otherImgs.map((img)=>(
+                <div key={img.idx} onClick={() => setMainIdx(img.idx)}
+                  className="overflow-hidden rounded-xl border cursor-pointer hover:border-white transition-colors" 
+                  style={{width:90,height:65,borderColor:`${p.color}40`, background: "#0d0d0d"}}>
+                  <img src={img.src} alt="" loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500 opacity-80 hover:opacity-100"/>
                 </div>
               ))}
             </div>

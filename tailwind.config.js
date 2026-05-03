@@ -7,6 +7,15 @@ export default {
         sans: ["'Syne'","sans-serif"],
         mono: ["'JetBrains Mono'","monospace"],
       },
+      keyframes: {
+        "fade-in": {
+          "0%": { opacity: 0.3 },
+          "100%": { opacity: 1 },
+        }
+      },
+      animation: {
+        "fade-in": "fade-in 0.4s ease-out forwards",
+      }
     },
   },
   plugins: [],
