@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #00FF94;
+  --cyan: #00D4FF;
+  --bg: #080808;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: #080808;
+  color: #F0F0F0;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (hover: none) {
+  body { cursor: auto; }
+  a, button { cursor: pointer !important; }
+}
+
+a, button { cursor: none; }
+
+::selection { background: #00FF94; color: #000; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #00FF94, #00D4FF);
+  border-radius: 2px;
+}
+
+/* Film grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 9990;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* Skill pill hover */
+.skill-pill {
+  transition: background 0.22s, border-color 0.22s, color 0.22s;
+}
+.skill-pill:hover {
+  background: rgba(0,255,148,0.09) !important;
+  border-color: rgba(0,255,148,0.45) !important;
+  color: #00FF94 !important;
+}
+
+/* 3D canvas */
+canvas { display: block; }
+
+/* Marquee */
+@keyframes marquee-l {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+@keyframes marquee-r {
+  0%   { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+/* Scanline for loader */
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
