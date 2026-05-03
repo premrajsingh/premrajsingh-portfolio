@@ -401,10 +401,33 @@ function About() {
         </div>
       </div>
       <div className="flex flex-col items-center gap-7">
-        <div className="relative" style={{width:320,height:320}}>
-          <Suspense fallback={<div className="w-full h-full rounded-full animate-pulse" style={{background:"rgba(0,255,148,0.05)"}}/>}>
-            <ProfileScene/>
-          </Suspense>
+        <div className="relative group flex items-center justify-center w-full h-[360px] md:h-[400px]">
+          {/* Animated blurred aura behind */}
+          <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 m-auto w-64 h-64 rounded-full blur-[80px]" style={{ background: "#00FF94" }} />
+          
+          {/* Main Photo Container */}
+          <motion.div whileHover={{ scale: 1.05, rotate: -2 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="relative z-10 w-64 h-80 rounded-[2rem] overflow-hidden shadow-2xl"
+            style={{ border: "2px solid rgba(0,255,148,0.3)", boxShadow: "0 20px 50px -10px rgba(0,255,148,0.3)" }}>
+            <img src="/photos/hero.jpg" alt="Prem Raj" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" />
+            
+            {/* Glassmorphism gradient overlay */}
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 40%)" }}/>
+          </motion.div>
+
+          {/* Floating badges */}
+          <motion.div animate={{ y: [-10, 10, -10] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute z-20 -right-4 top-20 px-4 py-2 rounded-2xl backdrop-blur-md font-bold text-xs"
+            style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(0,255,148,0.3)", color: "#00FF94" }}>
+            MERN Stack
+          </motion.div>
+          
+          <motion.div animate={{ y: [10, -10, 10] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute z-20 -left-6 bottom-24 px-4 py-2 rounded-2xl backdrop-blur-md font-bold text-xs"
+            style={{ background: "rgba(10,10,10,0.8)", border: "1px solid rgba(0,212,255,0.3)", color: "#00D4FF" }}>
+            AI Integrations
+          </motion.div>
         </div>
         <div className="flex flex-wrap gap-3 justify-center">
           {[["📍","Delhi, India"],["🎓","GGSIPU · 8.0 CGPA"],["💼","2 Clients"],["⚡","Open to Work"]].map(([ic,tx],i)=>(
