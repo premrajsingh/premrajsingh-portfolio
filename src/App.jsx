@@ -303,7 +303,7 @@ function Hero() {
               style={{background:"linear-gradient(135deg,#00FF94,#00D4FF)",boxShadow:"0 0 30px rgba(0,255,148,0.28)"}}>
               View Work →
             </a>
-            <a href="#" data-h className="h-btn flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all"
+            <a href="/Prem_Raj_Resume.pdf" download data-h className="h-btn flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all"
               style={{border:"1px solid rgba(0,255,148,0.28)",color:"#00FF94"}}
               onMouseEnter={e=>{e.currentTarget.style.background="rgba(0,255,148,0.07)"}}
               onMouseLeave={e=>{e.currentTarget.style.background="transparent"}}>
@@ -438,7 +438,7 @@ function About() {
             </motion.span>
           ))}
         </div>
-        <motion.a href="#" data-h initial={{opacity:0}} animate={inView?{opacity:1}:{}} transition={{delay:0.85}}
+        <motion.a href="/Prem_Raj_Resume.pdf" download data-h initial={{opacity:0}} animate={inView?{opacity:1}:{}} transition={{delay:0.85}}
           className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all"
           style={{border:"1px solid rgba(0,255,148,0.25)",color:"#00FF94"}}
           onMouseEnter={e=>{e.currentTarget.style.background="rgba(0,255,148,0.07)"}}
