@@ -310,7 +310,7 @@ function Hero() {
               <Download size={14}/>Resume
             </a>
             <div className="flex gap-2 h-btn">
-              {[{I:Github,h:"https://github.com/premrajsingh"},{I:Linkedin,h:"https://linkedin.com/in/prem-raj"},{I:Mail,h:"mailto:singhpremraj264@gmail.com"}].map(({I,h},k)=>(
+              {[{I:Github,h:"https://github.com/premrajsingh"},{I:Linkedin,h:"https://www.linkedin.com/in/prem-raj-08065539a/"},{I:Mail,h:"mailto:singhpremraj264@gmail.com"}].map(({I,h},k)=>(
                 <a key={k} href={h} target="_blank" rel="noreferrer" data-h
                   className="w-11 h-11 rounded-full flex items-center justify-center transition-all"
                   style={{border:"1px solid rgba(0,255,148,0.2)",color:"#00FF94"}}
@@ -912,7 +912,7 @@ function Contact() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
           {icon:copied?<Check size={22}/>:<Mail size={22}/>,label:copied?"Copied!":"singhpremraj264@gmail.com",onClick:cp},
-          {icon:<Linkedin size={22}/>,label:"linkedin/prem-raj",href:"https://linkedin.com/in/prem-raj"},
+          {icon:<Linkedin size={22}/>,label:"linkedin/in/prem-raj-08065539a",href:"https://www.linkedin.com/in/prem-raj-08065539a/"},
           {icon:<Github size={22}/>,label:"github/premrajsingh",href:"https://github.com/premrajsingh"},
           {icon:<MapPin size={22}/>,label:"Delhi, India"},
         ].map((c,i)=>{
@@ -939,7 +939,7 @@ function Footer() {
       <p>© 2026 Prem Raj · Built with ☕ + late nights</p>
       <p className="text-center hidden md:block">React · R3F · GSAP · Framer Motion · Three.js</p>
       <div className="flex gap-4 md:justify-end">
-        {[{I:Github,h:"https://github.com/premrajsingh"},{I:Linkedin,h:"https://linkedin.com/in/prem-raj"},{I:Mail,h:"mailto:singhpremraj264@gmail.com"}].map(({I,h},k)=>(
+        {[{I:Github,h:"https://github.com/premrajsingh"},{I:Linkedin,h:"https://www.linkedin.com/in/prem-raj-08065539a/"},{I:Mail,h:"mailto:singhpremraj264@gmail.com"}].map(({I,h},k)=>(
           <a key={k} href={h} target="_blank" rel="noreferrer" data-h className="transition-colors hover:text-[#00FF94]"><I size={16}/></a>
         ))}
       </div>
