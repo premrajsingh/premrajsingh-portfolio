@@ -34,43 +34,43 @@ const SKILLS = [
 ]
 
 const PROJECTS = [
-  { num:"01", title:"Spotify Web Clone",          type:"Frontend · UI/UX",
+  { num:"01", title:"Spotify Web Clone",          type:"Frontend",
     tech:["HTML5","CSS3","Vanilla JavaScript","DOM Manipulation"],
     desc:"A fully functional Spotify web player clone featuring music playback, playlist rendering, and responsive UI built with vanilla web technologies.",
     color:"#1DB954",
     imgs:["/photos/spotify-main.png","/photos/spotify-sub1.png","/photos/spotify-sub2.png"],
     live:"https://premrajsingh.github.io/spotify/", github:"https://github.com/premrajsingh/spotify" },
-  { num:"02", title:"CRUD Application",           type:"Backend · Dashboard",
+  { num:"02", title:"CRUD Application",           type:"Backend",
     tech:["Node.js","Express.js","MongoDB","Mongoose"],
     desc:"A complete RESTful CRUD application with persistent MongoDB storage, deployed on Render for robust cloud availability.",
     color:"#F59E0B",
     imgs:[],
     live:"https://crud-operation-4-56id.onrender.com", github:"https://github.com/premrajsingh/crud-operation" },
-  { num:"03", title:"Studify Hub",                type:"Frontend · EdTech",
+  { num:"03", title:"Studify Hub",                type:"Full Stack",
     tech:["HTML5","CSS3","JavaScript","LocalStorage"],
     desc:"Student productivity platform with integrated code editor, API tools, and workflow automation. Modular architecture reduced manual effort by 30%.",
     color:"#8B5CF6",
     imgs:["/photos/studify-main.png","/photos/studify-sub1.png","/photos/studify-sub2.png"],
     live:"https://premrajsingh.github.io/StudifyHub/", github:"https://github.com/premrajsingh/StudifyHub" },
-  { num:"04", title:"Dasgupta Maiti Portal",      type:"Freelance · MERN",
+  { num:"04", title:"Dasgupta Maiti Portal",      type:"MERN · Freelance",
     tech:["React","Node.js","Express","MongoDB","JWT Auth","Cloudinary","Nodemailer"],
     desc:"Secure enterprise portal for a Kolkata law firm — JWT/RBAC auth, Cloudinary media, Zoho Mail integration, full SSL + DNS production deploy.",
     color:"#EC4899",
     imgs:["/photos/dasgupta-main.png","/photos/dasgupta-sub1.png","/photos/dasgupta-sub2.png"],
     live:"https://dasguptamaitiassociates.com/", github:"https://github.com/premrajsingh/CAweb" },
-  { num:"05", title:"Yashoda Bhawan System",      type:"Freelance · Full Stack",
+  { num:"05", title:"Yashoda Bhawan System",      type:"Full Stack · Freelance",
     tech:["React","Node.js","MongoDB","Express","Tailwind CSS"],
     desc:"Hotel management system with admin dashboard for Jharkhand property. Optimised DB schema, REST APIs, performance-focused production deployment.",
     color:"#3B82F6",
     imgs:["/photos/yashoda-main.png","/photos/yashoda-sub1.png","/photos/yashoda-sub2.png"],
     live:"#", github:"#" },
-  { num:"06", title:"Bank Statement Processor",   type:"Automation · Python",
+  { num:"06", title:"Bank Statement Processor",   type:"Python · Automation",
     tech:["Python","Gmail API","Hashlib (SHA)","macOS launchd"],
     desc:"Background daemon that ingests Gmail attachments, classifies banks, SHA-deduplicates documents — slashing manual effort by 90–95%.",
     color:"#00D4FF",
     imgs:[],
     live:"#", github:"https://github.com/premrajsingh/Automated-Bank-Statement-Processing-System" },
-  { num:"07", title:"AI Project Estimator",       type:"AI · Full Stack",
+  { num:"07", title:"AI Project Estimator",       type:"AI/ML · Full Stack",
     tech:["FastAPI","React","Gemini AI","MongoDB","Tailwind CSS"],
     desc:"Multi-agent AI system that analyses GitHub repos and generates architecture reports, cost & timeline estimates. Built Repo Intelligence for deep codebase analysis.",
     color:"#00FF94",
@@ -529,160 +529,211 @@ function Skills() {
   </section>)
 }
 
-// ──────────────────────── PROJECTS — BENTO CINEMATIC ────────────────────────
-// Each project = full-width alternating bento card with 3D tilt
-function ProjectBentoCard({ p, i }) {
-  const cardRef = useRef()
-  const inView = useInView(cardRef, { once: true, margin: "-60px" })
-  const isEven = i % 2 === 0
-  
-  const [mainIdx, setMainIdx] = useState(0)
-  const otherImgs = p.imgs.map((src, idx) => ({ src, idx })).filter(img => img.idx !== mainIdx)
-
-  // 3D tilt
-  const rx = useMotionValue(0), ry = useMotionValue(0)
-  const srx = useSpring(rx, { damping: 24, stiffness: 200 })
-  const sry = useSpring(ry, { damping: 24, stiffness: 200 })
-  const onMM = e => {
-    const r = e.currentTarget.getBoundingClientRect()
-    ry.set(((e.clientX - r.left) / r.width - 0.5) * 10)
-    rx.set(-((e.clientY - r.top) / r.height - 0.5) * 10)
-  }
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={onMM}
-      onMouseLeave={() => { rx.set(0); ry.set(0) }}
-      initial={{ opacity: 0, y: 80 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-      style={{ rotateX: srx, rotateY: sry, transformPerspective: "1200px" }}
-      className="relative rounded-[28px] overflow-hidden group"
-    >
-      {/* Glowing colored border */}
-      <div className="absolute inset-0 rounded-[28px] pointer-events-none z-20"
-        style={{ border: `1px solid ${p.color}22`, boxShadow: `inset 0 0 40px ${p.color}08` }}/>
-      {/* Card bg */}
-      <div className="relative" style={{ background: "#0d0d0d" }}>
-        {/* Big watermark number */}
-        <div className="absolute font-black font-mono pointer-events-none select-none"
-          style={{
-            fontSize:"clamp(8rem,18vw,14rem)", lineHeight:1,
-            color: `${p.color}08`,
-            bottom: isEven ? "-0.15em" : "auto",
-            top: !isEven ? "-0.1em" : "auto",
-            right: isEven ? "-0.05em" : "auto",
-            left: !isEven ? "-0.05em" : "auto",
-            zIndex: 1,
-          }}>
-          {p.num}
-        </div>
-
-        {/* Top accent bar */}
-        <div className="h-1 w-full" style={{ background: `linear-gradient(90deg,${p.color},transparent)` }}/>
-
-        <div className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-0 relative z-10`}>
-          {/* ── IMAGE COLUMN ── */}
-          <div className="relative lg:w-[58%] overflow-hidden" style={{ minHeight: 360 }}>
-            {/* Main image */}
-            <div className="absolute inset-0">
-              {p.imgs.length > 0 && (
-                <img key={mainIdx} src={p.imgs[mainIdx]} alt={p.title} loading="lazy"
-                  className="w-full h-full object-cover animate-fade-in group-hover:scale-105 transition-transform duration-700 ease-out"/>
-              )}
-              {/* Color overlay */}
-              <div className="absolute inset-0" style={{ background: `linear-gradient(135deg,${p.color}18,transparent 60%)` }}/>
-              {/* Bottom fade */}
-              <div className="absolute inset-0 lg:hidden"
-                style={{ background: "linear-gradient(to top,#0d0d0d 0%,transparent 60%)" }}/>
-            </div>
-            {/* Small images bottom corner */}
-            <div className={`absolute bottom-3 ${isEven?"right-3":"left-3"} flex gap-2 z-10`}>
-              {otherImgs.map((img)=>(
-                <div key={img.idx} onClick={() => setMainIdx(img.idx)}
-                  className="overflow-hidden rounded-xl border cursor-pointer hover:border-white transition-colors" 
-                  style={{width:90,height:65,borderColor:`${p.color}40`, background: "#0d0d0d"}}>
-                  <img src={img.src} alt="" loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500 opacity-80 hover:opacity-100"/>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── TEXT COLUMN ── */}
-          <div className={`lg:w-[42%] p-7 md:p-10 flex flex-col justify-between`}>
-            {/* Header */}
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="font-mono text-xs font-bold px-3 py-1 rounded-full"
-                  style={{ background: `${p.color}18`, color: p.color, border: `1px solid ${p.color}35` }}>
-                  {p.type}
-                </span>
-                <span className="font-mono text-xs text-gray-600">{p.num}</span>
-              </div>
-              <h3 className="font-black leading-tight mb-4"
-                style={{ fontSize:"clamp(1.6rem,3.5vw,2.5rem)", color: "#fff" }}>
-                {p.title}
-              </h3>
-              <p className="text-gray-400 leading-relaxed text-sm mb-5">{p.desc}</p>
-              {/* Tech tags */}
-              <div className="flex flex-wrap gap-2 mb-6">
-                {p.tech.map(t=>(
-                  <span key={t} className="px-3 py-1 rounded-full text-xs font-semibold"
-                    style={{ background:`${p.color}12`, border:`1px solid ${p.color}30`, color:p.color }}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-            {/* Buttons */}
-            <div className="flex gap-3">
-              <a href={p.live} target="_blank" rel="noreferrer" data-h
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold text-black"
-                style={{ background: `linear-gradient(135deg,${p.color},#00D4FF)` }}>
-                <ExternalLink size={13}/>Live
-              </a>
-              <a href={p.github} target="_blank" rel="noreferrer" data-h
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold transition-all"
-                style={{ border:`1px solid ${p.color}40`, color:p.color }}
-                onMouseEnter={e=>{e.currentTarget.style.background=`${p.color}12`}}
-                onMouseLeave={e=>{e.currentTarget.style.background="transparent"}}>
-                <Github size={13}/>GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
+// ──────────────────────── PROJECTS — EXPANDABLE GALLERY ────────────────────────
 function Projects() {
-  const ref = useRef(), inView = useInView(ref, { once: true, margin: "-80px" })
+  const [activeProject, setActiveProject] = useState(null)
+  const [cols, setCols] = useState(2)
+  const ref = useRef()
+  const inView = useInView(ref, { once: true, margin: "-80px" })
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeProject) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+  }, [activeProject])
+
   return (
-    <section id="projects" className="py-24 px-6" style={{ borderTop:"1px solid rgba(0,255,148,0.05)" }}>
-      <div ref={ref} className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <div className="mb-16">
-          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} className="font-mono text-sm mb-3" style={{color:"#00FF94"}}>// selected.work</motion.p>
-          <div className="flex items-end justify-between flex-wrap gap-4">
-            <motion.h2 initial={{opacity:0,y:28}} animate={inView?{opacity:1,y:0}:{}} transition={{delay:0.08}}
-              className="font-black leading-none"
-              style={{fontSize:"clamp(2.4rem,8vw,7rem)",background:"linear-gradient(135deg,#00FF94,#00D4FF)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
-              Selected<br/>Work
-            </motion.h2>
-            <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} transition={{delay:0.2}}
-              className="text-gray-600 font-mono text-xs max-w-[200px] text-right leading-relaxed">
-              {PROJECTS.length} projects<br/>shipped to production
-            </motion.p>
-          </div>
+    <section id="projects" className="py-32 px-6 relative" style={{ borderTop:"1px solid rgba(0,255,148,0.05)", background: "#000" }}>
+      {/* Background decoration */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 pointer-events-none opacity-[0.12]" 
+           style={{ background: "radial-gradient(ellipse at top, #00FF94, transparent 70%)" }} />
+           
+      <div ref={ref} className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-20 flex flex-col items-center">
+          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} className="font-mono text-sm mb-4 tracking-widest uppercase" style={{color:"#00FF94"}}>
+            // project.gallery
+          </motion.p>
+          <motion.h2 initial={{opacity:0,y:30}} animate={inView?{opacity:1,y:0}:{}} transition={{delay:0.1, duration:0.7}}
+            className="font-black leading-none"
+            style={{fontSize:"clamp(3rem,9vw,6rem)", background:"linear-gradient(180deg,#FFFFFF 0%,#808080 100%)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent"}}>
+            Selected Work
+          </motion.h2>
+          <motion.p initial={{opacity:0}} animate={inView?{opacity:1}:{}} transition={{delay:0.2}} className="mt-6 text-gray-400 max-w-2xl text-base md:text-lg">
+            Explore my entire arsenal of projects at a glance. Click on any card to reveal in-depth architectures, tech stacks, and live previews.
+          </motion.p>
         </div>
 
-        {/* Project cards — alternating bento */}
-        <div className="space-y-6">
-          {PROJECTS.map((p, i) => <ProjectBentoCard key={p.num} p={p} i={i} />)}
+        {/* View Toggle Controls */}
+        <motion.div initial={{opacity:0, y:10}} animate={inView?{opacity:1, y:0}:{}} transition={{delay:0.3}} className="flex justify-center mb-12">
+          <div className="flex bg-[#0a0a0a] border border-white/10 p-1.5 rounded-full items-center">
+             <span className="text-gray-500 text-xs font-mono uppercase tracking-widest px-4 hidden sm:block">Columns:</span>
+             {[2, 3, 4].map(num => (
+               <button
+                 key={num}
+                 onClick={() => setCols(num)}
+                 className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${cols === num ? 'bg-[#00FF94] text-black shadow-[0_0_15px_rgba(0,255,148,0.4)]' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+               >
+                 {num}
+               </button>
+             ))}
+          </div>
+        </motion.div>
+
+        {/* Grid View (All visible at once) */}
+        <div className={`grid gap-6 md:gap-8 transition-all duration-500 ${
+          cols === 2 ? "grid-cols-1 md:grid-cols-2" :
+          cols === 3 ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" :
+          "grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
+        }`}>
+          {PROJECTS.map((p, i) => (
+            <motion.div
+              layoutId={`card-${p.num}`}
+              key={p.num}
+              onClick={() => setActiveProject(p)}
+              initial={{ opacity: 0, y: 50 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.02, y: -8 }}
+              className="group cursor-pointer rounded-3xl overflow-hidden bg-[#080808] border border-white/5 relative flex flex-col h-[400px] shadow-2xl"
+            >
+              {/* Image Box */}
+              <motion.div layoutId={`image-${p.num}`} className="h-[65%] w-full relative overflow-hidden bg-[#0d0d0d]">
+                {p.imgs && p.imgs.length > 0 ? (
+                  <img src={p.imgs[0]} alt={p.title} className="w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-700" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center font-black text-6xl opacity-10" style={{color: p.color}}>{p.num}</div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/40 to-transparent opacity-90" />
+                
+                {/* Floating Tag */}
+                <div className="absolute top-5 left-5">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md"
+                    style={{ background: "rgba(0,0,0,0.6)", color: "#fff", border: `1px solid ${p.color}40` }}>
+                    {p.type}
+                  </span>
+                </div>
+              </motion.div>
+              
+              {/* Content Summary */}
+              <div className="p-6 flex flex-col flex-1 relative z-10 -mt-8">
+                 <div className="flex justify-between items-end mb-3">
+                   <motion.h3 layoutId={`title-${p.num}`} className="text-xl md:text-2xl font-black text-white group-hover:text-[#00FF94] transition-colors">{p.title}</motion.h3>
+                   <span className="font-mono text-sm text-gray-600">{p.num}</span>
+                 </div>
+                 
+                 <p className="text-gray-400 text-xs line-clamp-2 mb-4 flex-1">
+                   {p.desc}
+                 </p>
+                 
+                 <motion.div layoutId={`tech-${p.num}`} className="flex flex-wrap gap-2">
+                   {p.tech.slice(0, 3).map(t => (
+                     <span key={t} className="px-2 py-1 rounded-md text-[10px] font-bold" style={{ background: "rgba(255,255,255,0.05)", border:"1px solid rgba(255,255,255,0.1)", color: "#aaa" }}>{t}</span>
+                   ))}
+                   {p.tech.length > 3 && <span className="px-2 py-1 rounded-md text-[10px] font-bold text-gray-500">+{p.tech.length - 3}</span>}
+                 </motion.div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+        
+        <motion.div initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} viewport={{once:true}} className="mt-16 flex justify-center">
+          <a href="https://github.com/premrajsingh" target="_blank" rel="noreferrer" data-h 
+            className="flex items-center gap-3 px-8 py-4 rounded-full font-bold text-sm transition-all hover:scale-105 hover:bg-[#00FF94] hover:text-black"
+            style={{ border: "1px solid rgba(0,255,148,0.3)", color: "#00FF94" }}>
+            Explore GitHub Profile <ArrowUp size={16} className="rotate-45" />
+          </a>
+        </motion.div>
       </div>
+
+      {/* Expanded Modal View */}
+      <AnimatePresence>
+        {activeProject && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveProject(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-xl z-[100]"
+            />
+            <div className="fixed inset-0 z-[101] flex items-center justify-center p-4 md:p-8 pointer-events-none">
+              <motion.div
+                layoutId={`card-${activeProject.num}`}
+                className="w-full max-w-6xl h-[90vh] md:h-[85vh] rounded-[2rem] bg-[#0a0a0a] border border-white/10 overflow-hidden flex flex-col md:flex-row pointer-events-auto shadow-[0_0_80px_rgba(0,0,0,0.8)] relative"
+              >
+                 {/* Close Button */}
+                 <button onClick={() => setActiveProject(null)} className="absolute top-6 right-6 z-50 w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all hover:rotate-90">
+                   <X size={24} />
+                 </button>
+
+                 {/* Left: Image Box */}
+                 <motion.div layoutId={`image-${activeProject.num}`} className="w-full md:w-[55%] h-[40%] md:h-full relative bg-[#050505]">
+                    {activeProject.imgs && activeProject.imgs.length > 0 ? (
+                      <img src={activeProject.imgs[0]} alt={activeProject.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center font-black text-9xl opacity-10" style={{color: activeProject.color}}>{activeProject.num}</div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0a0a0a] via-transparent to-transparent opacity-90" />
+                    
+                    <div className="absolute bottom-6 left-6 flex gap-2">
+                       {activeProject.imgs.map((src, idx) => (
+                         <div key={idx} className="w-16 h-12 rounded-lg border border-white/20 overflow-hidden opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                           <img src={src} className="w-full h-full object-cover" />
+                         </div>
+                       ))}
+                    </div>
+                 </motion.div>
+                 
+                 {/* Right: Detailed Content */}
+                 <div className="w-full md:w-[45%] h-[60%] md:h-full p-8 md:p-12 flex flex-col overflow-y-auto bg-[#0a0a0a]">
+                    <div className="flex items-center gap-3 mb-6">
+                      <span className="font-mono text-sm font-bold px-3 py-1 rounded-full"
+                        style={{ background: `${activeProject.color}15`, color: activeProject.color, border: `1px solid ${activeProject.color}35` }}>
+                        {activeProject.type}
+                      </span>
+                      <span className="font-mono text-xl opacity-20 font-black">{activeProject.num}</span>
+                    </div>
+
+                    <motion.h3 layoutId={`title-${activeProject.num}`} className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
+                      {activeProject.title}
+                    </motion.h3>
+                    
+                    <motion.div layoutId={`tech-${activeProject.num}`} className="flex flex-wrap gap-2 mb-8">
+                      {activeProject.tech.map(t => (
+                        <span key={t} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#e0e0e0" }}>{t}</span>
+                      ))}
+                    </motion.div>
+                    
+                    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.2}} className="flex-1">
+                      <h4 className="text-white font-bold mb-3">About the Project</h4>
+                      <p className="text-gray-400 text-sm md:text-base leading-relaxed mb-8">
+                        {activeProject.desc}
+                      </p>
+                    </motion.div>
+                    
+                    <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.3}} className="flex gap-4 mt-auto pt-6 border-t border-white/10">
+                      <a href={activeProject.live} target="_blank" rel="noreferrer" data-h
+                        className="flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-black text-black text-sm transition-transform hover:scale-105"
+                        style={{ background: activeProject.color, boxShadow: `0 10px 40px -10px ${activeProject.color}80` }}>
+                        Live Preview <ExternalLink size={18}/>
+                      </a>
+                      <a href={activeProject.github} target="_blank" rel="noreferrer" data-h
+                        className="w-14 h-14 flex items-center justify-center rounded-xl transition-all hover:scale-105 shrink-0"
+                        style={{ border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "#fff" }}
+                        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.15)"}
+                        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.05)"}>
+                        <Github size={22}/>
+                      </a>
+                    </motion.div>
+                 </div>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
