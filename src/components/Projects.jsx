@@ -192,7 +192,12 @@ export function BankPipelineFigure() {
 
         const tl = gsap.timeline({
           defaults: { ease: "power2.inOut" },
-          scrollTrigger: { trigger: svg, start: "top 85%", once: true },
+          scrollTrigger: {
+            trigger: svg,
+            start: "top 85%",
+            end: "bottom top",
+            toggleActions: "play reset play reset",
+          },
         })
 
         strokes.forEach((el, i) => {

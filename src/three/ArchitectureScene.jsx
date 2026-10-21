@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Canvas, useFrame } from "@react-three/fiber"
 import {
   ContactShadows,
   Environment,
@@ -426,23 +426,33 @@ function CameraRig({ tier, progressRef, pointerRef, rig }) {
 /* Scene root                                                                                  */
 /* ------------------------------------------------------------------------------------------ */
 
-function Diagram({ tier, progressRef, pointerRef, perfLevel }) {
+function Diagram({ tier, progressRef, pointerRef, perfLevel, visible }) {
   const rig = useRef()
   const gradient = useToonGradient()
   const pulses = useRef({})
   const born = useRef(0)
-  const clock = useThree((s) => s.clock)
   const [entranceDone, setEntranceDone] = useState(tier !== "full")
 
+  // (Re)start the entrance each time the hero becomes visible: on mount, and again when the
+  // visitor scrolls back to the top, so the diagram re-assembles like on a fresh load.
+  // The clock is paused while off-screen (frameloop "never"), so the real start time is
+  // stamped on the first frame after resuming; until then `Infinity` keeps everything at its
+  // pre-entrance state instead of flashing the finished diagram for a frame.
   useLayoutEffect(() => {
-    born.current = clock.elapsedTime
-  }, [clock])
+    if (!visible) return
+    born.current = Infinity
+    if (tier === "full") setEntranceDone(false)
+  }, [visible, tier])
+
+  useFrame((state) => {
+    if (born.current === Infinity) born.current = state.clock.elapsedTime
+  })
 
   useEffect(() => {
-    if (tier !== "full") return undefined
+    if (tier !== "full" || !visible) return undefined
     const id = window.setTimeout(() => setEntranceDone(true), 1500)
     return () => window.clearTimeout(id)
-  }, [tier])
+  }, [tier, visible])
 
   const glass = LLM_GLASS && tier === "full" && perfLevel < 2
   const glassQuality =
@@ -601,6 +611,7 @@ export default function ArchitectureScene({ tier, eventSource, progressRef, poin
         progressRef={progressRef}
         pointerRef={pointerRef}
         perfLevel={perfLevel}
+        visible={visible}
       />
     </Canvas>
   )

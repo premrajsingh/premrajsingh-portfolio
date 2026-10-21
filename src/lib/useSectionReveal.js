@@ -5,6 +5,9 @@ import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion"
 
 gsap.registerPlugin(ScrollTrigger)
 
+/** Play on entering from either direction; reset once fully off-screen so it replays. */
+const REPLAY = "play reset play reset"
+
 /**
  * GSAP owns scroll-driven motion. Framer Motion owns menu/dialog presence.
  * CSS owns hover/focus. Never animate the same property with two libraries.
@@ -31,14 +34,6 @@ export function useSectionReveal(scopeRef) {
       const mm = gsap.matchMedia()
 
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const finishIfPast = (self) => {
-          const trigger = self.trigger
-          if (!trigger) return
-          if (trigger.getBoundingClientRect().top < window.innerHeight * 0.92) {
-            self.animation.progress(1)
-          }
-        }
-
         root.querySelectorAll("[data-mask]").forEach((block) => {
           const lines = block.querySelectorAll(".mask-line > span")
           if (!lines.length) return
@@ -50,8 +45,8 @@ export function useSectionReveal(scopeRef) {
             scrollTrigger: {
               trigger: block,
               start: "top 88%",
-              once: true,
-              onRefresh: finishIfPast,
+              end: "bottom top",
+              toggleActions: REPLAY,
             },
           })
         })
@@ -67,8 +62,8 @@ export function useSectionReveal(scopeRef) {
               scrollTrigger: {
                 trigger: el,
                 start: "top 90%",
-                once: true,
-                onRefresh: finishIfPast,
+                end: "bottom top",
+                toggleActions: REPLAY,
               },
             }
           )
@@ -93,8 +88,8 @@ export function useSectionReveal(scopeRef) {
               scrollTrigger: {
                 trigger: el,
                 start: "top 88%",
-                once: true,
-                onRefresh: finishIfPast,
+                end: "bottom top",
+                toggleActions: REPLAY,
               },
             }
           )
@@ -111,8 +106,8 @@ export function useSectionReveal(scopeRef) {
                 scrollTrigger: {
                   trigger: el,
                   start: "top 88%",
-                  once: true,
-                  onRefresh: finishIfPast,
+                  end: "bottom top",
+                  toggleActions: REPLAY,
                 },
               }
             )
@@ -131,8 +126,8 @@ export function useSectionReveal(scopeRef) {
               scrollTrigger: {
                 trigger: el,
                 start: "top 94%",
-                once: true,
-                onRefresh: finishIfPast,
+                end: "bottom top",
+                toggleActions: REPLAY,
               },
             }
           )
@@ -150,8 +145,8 @@ export function useSectionReveal(scopeRef) {
               scrollTrigger: {
                 trigger: el,
                 start: "top 92%",
-                once: true,
-                onRefresh: finishIfPast,
+                end: "bottom top",
+                toggleActions: REPLAY,
               },
             }
           )
@@ -169,8 +164,8 @@ export function useSectionReveal(scopeRef) {
             scrollTrigger: {
               trigger: parent,
               start: "top 90%",
-              once: true,
-              onRefresh: finishIfPast,
+              end: "bottom top",
+              toggleActions: REPLAY,
             },
           })
         })

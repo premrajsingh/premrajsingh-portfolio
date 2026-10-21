@@ -400,6 +400,16 @@ export default function Hero() {
             0.65
           )
 
+        // Replay the intro when the hero comes back: reset once it has fully scrolled away,
+        // restart (without the load delay) as soon as its bottom edge re-enters the viewport.
+        ScrollTrigger.create({
+          trigger: root,
+          start: "top bottom",
+          end: "bottom top",
+          onLeave: () => tl.pause(0),
+          onEnterBack: () => tl.restart(),
+        })
+
         ScrollTrigger.create({
           trigger: root,
           start: "top top",

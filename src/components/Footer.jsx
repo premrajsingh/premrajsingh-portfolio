@@ -46,15 +46,6 @@ const LINK_CLASS =
 /** Same values as the reveal system's `[data-stagger]` tween, so the footer matches the page. */
 const STAGGER_FROM = { y: 14, opacity: 0.001, duration: 0.5, stagger: 0.04, ease: "power3.out" }
 
-/** A list already on screen at refresh time (reload at the bottom) is shown complete, not replayed. */
-function finishIfPast(self) {
-  const trigger = self.trigger
-  if (!trigger) return
-  if (trigger.getBoundingClientRect().top < window.innerHeight * 0.92) {
-    self.animation.progress(1)
-  }
-}
-
 export default function Footer() {
   const footerRef = useRef(null)
   const reduced = usePrefersReducedMotion()
@@ -76,8 +67,8 @@ export default function Footer() {
             scrollTrigger: {
               trigger: list,
               start: "clamp(top 90%)",
-              once: true,
-              onRefresh: finishIfPast,
+              end: "bottom top",
+              toggleActions: "play reset play reset",
             },
           })
         })
