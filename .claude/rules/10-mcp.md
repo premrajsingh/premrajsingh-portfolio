@@ -1,0 +1,9 @@
+
+# MCP usage
+
+- Prefer already-configured MCP servers; do not invent server names or credentials.
+- Never overwrite existing MCP config; merge carefully and preserve servers.
+- Never hardcode tokens or commit secrets.
+- If an MCP server is unavailable, continue with local tools and document the gap.
+- Browser MCP: use for smoke tests, console checks, screenshots, responsive QA.
+- Figma MCP: only when the user has configured it and provided file access.

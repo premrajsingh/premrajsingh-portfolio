@@ -1,0 +1,7 @@
+
+# Testing and verification
+
+- Run linting, formatting checks, unit tests, e2e tests, and production build when relevant.
+- Manually or via browser MCP: responsive layouts, keyboard navigation, reduced-motion, WebGL fallback.
+- Check the browser console for errors.
+- Never claim checks passed unless they were actually run in this session.

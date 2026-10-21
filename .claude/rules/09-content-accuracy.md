@@ -1,0 +1,6 @@
+
+# Content accuracy
+
+- Never invent clients, testimonials, awards, metrics, job titles, or project results.
+- Preserve the user's real information.
+- When information is missing, use clearly marked placeholders (e.g. `[TODO: project outcome]`).

@@ -1,1 +1,33 @@
+# Dependencies
 node_modules
+
+# Build
+dist
+.vite
+
+# Environment (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Tests
+coverage
+playwright-report
+test-results
+blob-report
+playwright/.cache
+
+# Logs / debug
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo

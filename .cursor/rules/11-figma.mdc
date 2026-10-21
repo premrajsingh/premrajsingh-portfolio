@@ -1,0 +1,13 @@
+---
+description: Figma-to-code workflow rules for future design implementation
+alwaysApply: false
+---
+
+# Figma
+
+- Treat the approved Figma file as source of truth only when the user says so.
+- Inspect structure, spacing, typography, and tokens before coding.
+- Map Figma variables to code tokens; do not blindly paste generated code.
+- Prefer semantic HTML/CSS over image exports when possible.
+- Ask for clarification when the design is ambiguous; do not invent missing specs.
+- Never store Figma tokens in the repository.

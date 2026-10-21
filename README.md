@@ -1,87 +1,45 @@
-# 🚀 Prem Raj — 3D Animated Portfolio
+# Prem Raj — AI Software Developer
 
-A premium, recruiter-stopping portfolio built with React, React Three Fiber, GSAP, Framer Motion, and Three.js.
+Personal portfolio built with React 18, Vite 5, Tailwind CSS 3, GSAP (ScrollTrigger), Framer Motion, Lenis and React Three Fiber. The hero is a WebGL reference-architecture diagram assembled only from components on the résumé, with a **Run a request** button that plays a scripted request through it hop by hop next to a span waterfall. The same drawn vocabulary continues down the page: each Experience role shows its stack as 3D objects, Work screenshots stand as 3D screens, and the Skills groups sit on a 3D shelf that answers the table's hover. Every figure loads only when it scrolls near, stops rendering off-screen, and has a plain DOM fallback for reduced motion and assistive tech. Every visible string comes from `src/data/content.js`, which is traced to `public/Prem_Raj_Resume.pdf`. The design and implementation contract lives in `docs/redesign-brief.md` and `docs/design-spec.md` (§13 covers the request trace and section figures).
 
-## 🛠️ Tech Stack
-- **React 18** + **Vite**
-- **React Three Fiber** (@react-three/fiber + @react-three/drei) — 3D scenes
-- **Three.js** — 3D engine under the hood
-- **GSAP** + **ScrollTrigger** — cinematic scroll animations
-- **Framer Motion** — UI transitions & spring physics
-- **Tailwind CSS** — utility styling
-- **Syne** (Google Fonts) — typography
+## Scripts
 
-## ⚡ Features
-- 🎬 Cinematic loading screen with GSAP bar animation
-- 🌐 3D floating photo collage in hero (your real photos as polaroids!)
-- 🌍 3D profile photo sphere with rotating rings (About section)
-- 🔮 3D floating skill orbs (Skills section background)
-- 🃏 Sticky stacking project cards with 3D tilt on hover
-- ✨ Custom magnetic cursor + green particle trail
-- 📊 GSAP ScrollTrigger scroll-driven animations
-- 🎉 Easter egg: type "hire" anywhere → confetti!
-- 📱 Fully responsive (mobile-first)
-- 🌿 Grain film overlay, dot-grid backgrounds
+| command                                | what it does                                                                                      |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `npm run dev`                          | Vite dev server on http://localhost:5173                                                          |
+| `npm run build`                        | production build to `dist/`                                                                       |
+| `npm run preview`                      | serve the production build locally                                                                |
+| `npm run lint`                         | ESLint over the repo                                                                              |
+| `npm run format`                       | Prettier write                                                                                    |
+| `npm run format:check`                 | Prettier check                                                                                    |
+| `npm run test`                         | Vitest unit tests                                                                                 |
+| `npm run test:e2e`                     | Playwright smoke tests (starts the dev server)                                                    |
+| `node scripts/capture.mjs [--reduced]` | screenshots + console/overflow report into `test-results/screens/` (needs the dev server running) |
 
-## 🚀 Quick Start
+## Before every release
 
 ```bash
-# 1. Install dependencies
-npm install
-
-# 2. Start dev server
-npm run dev
-
-# 3. Open http://localhost:5173
+npm run lint && npm run format:check && npm run test && npm run build && npm run test:e2e
 ```
 
-## 📁 Project Structure
-```
-prem-portfolio/
-├── public/
-│   └── photos/          ← Your real photos (already included!)
-│       ├── hero.jpg      ← Main hero + profile sphere
-│       ├── photo2-9.jpg  ← Hero collage + project images
-│       └── landscape.jpg
-├── src/
-│   ├── App.jsx           ← Main app (all sections)
-│   ├── index.css         ← Global styles + animations
-│   ├── main.jsx          ← React root
-│   └── three/
-│       ├── HeroScene.jsx    ← 3D hero with floating photo cards
-│       ├── ProfileScene.jsx ← 3D spinning photo sphere
-│       └── SkillsScene.jsx  ← 3D floating skill orbs
-├── package.json
-├── tailwind.config.js
-├── vite.config.js
-└── index.html
-```
+## Deploy (Vercel)
 
-## ✏️ How to Customize
+The site is a static Vite build (`dist/`); Vercel detects it automatically — no `vercel.json` is needed. Deploys are triggered by pushing to `main`.
 
-### Replace Photos
-Photos are already in `/public/photos/`. Replace any file keeping the same filename.
+`node_modules` was committed before `.gitignore` excluded it. Remove it from the index once (this deletes nothing on disk):
 
-### Update Projects / Skills
-Edit the `PROJECTS`, `SKILLS` arrays at the top of `src/App.jsx`.
-
-### Fill in Certifications
-Update the `CERTS` array in `src/App.jsx` with your actual cert names and platforms.
-
-### Fill in Hackathons
-Update the `HACKS` array in `src/App.jsx` with your actual hackathon details.
-
-### Update Links
-Search for `github.com/premrajsingh` and `linkedin.com/in/prem-raj` in `App.jsx` and replace with your actual URLs.
-
-## 🎯 Easter Egg
-Type **"hire"** anywhere on the page → confetti explosion! 🎉
-
-## 📦 Build for Production
 ```bash
-npm run build
-# Output in /dist — deploy to Vercel/Netlify
+git rm -r -q --cached node_modules
 ```
 
----
-Built with ❤️ by Prem Raj · © 2026
+Then commit and push:
+
+```bash
+git add -A && git commit -m "Redesign: Fig. 0 reference-architecture portfolio" && git push origin main
+```
+
+Environment variables are not required. `.env` stays local; `.env.example` lists the optional keys.
+
+## Content
+
+Everything shown on the page comes from `src/data/content.js`. To add bullet points for a role (for example the current Plancover internship), edit its `points` array there — nothing else changes.

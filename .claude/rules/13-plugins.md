@@ -1,0 +1,9 @@
+
+# Plugins
+
+- Prefer official Cursor marketplace plugins (e.g. Figma).
+- Inspect plugin contents before enabling unrelated MCP/skills.
+- Do not install duplicate tools that conflict with project MCP or packages.
+- Do not install paid or high-permission plugins without user approval.
+- Skip unavailable plugins; never fake an installation.
+- Plugins must not auto-redesign application UI.

@@ -1,0 +1,8 @@
+
+# Performance
+
+- Lazy-load heavy routes/modules and 3D scenes; code-split where useful.
+- Optimize images; keep layout stable (minimize CLS).
+- Keep animations lightweight; avoid unnecessary re-renders.
+- Avoid oversized dependencies; prioritize mobile and fast initial load.
+- Verify with build output size and browser/performance tooling when claiming improvements.
